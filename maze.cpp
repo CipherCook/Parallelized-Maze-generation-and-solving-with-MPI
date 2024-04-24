@@ -4,7 +4,7 @@
 #include <random>
 #include <mpi.h>
 #include <ctime>
-#define MAZE_SIZE 8
+#define MAZE_SIZE 32
 
 //mpicxx -g -O2 -std=c++17 -o maze maze.cpp
 
