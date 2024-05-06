@@ -8,7 +8,7 @@ CFLAGS = -g -O2 -std=c++17
 SRC1 = generator/mazegenerator.cpp
 SRC2 = generator/kruskal.cpp
 SRC3 = generator/bfs.cpp
-SRC4 = maze_utk.cpp
+SRC4 = maze.cpp
 
 MAIN = maze.out
 
