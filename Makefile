@@ -12,7 +12,7 @@ SRC4 = maze.cpp
 
 MAIN = maze.out
 
-maze_ : $(MAIN)
+maze_solver : $(MAIN)
 $(MAIN): $(SRC1) $(SRC2) $(SRC3) $(SRC4)
 	$(CXX) $(CFLAGS) -o $(MAIN) $(SRC1) $(SRC2) $(SRC3) $(SRC4)
 
