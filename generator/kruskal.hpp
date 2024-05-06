@@ -2,6 +2,9 @@
 #include <vector>
 #include <utility>
 #include <random>
+#include <queue>
+#include <algorithm>
+#include <cstring>
 #include <mpi.h>
 #include <ctime>
 #include<stdlib.h>
