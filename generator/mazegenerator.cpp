@@ -1,4 +1,5 @@
 #include "mazegenerator.hpp"
+
 #define MAZE_SIZE 32
 
 using namespace std;
@@ -123,6 +124,81 @@ void print_1d_maze(vector<pair<int,int>> mst, int maze_size)
 void print2dmaze(vector<vector<char>> maze)
 {
     for (int i = 0; i < 2 * MAZE_SIZE; ++i) {
+        cout<<'.';
+        for (int j = 0; j < 2 * MAZE_SIZE; ++j) {
+            cout << maze[i][j]<<'.';
+        }
+        cout << "\n";
+    }
+}
+
+void maze_gen_kruskal_slave(int my_rank, int comm_sz){
+    vector<pair<int,int>> local_mst = kruskals(my_rank, comm_sz);
+    MPI_Gather(local_mst.data(), local_mst.size() * sizeof(pair<int, int>), MPI_BYTE, nullptr, 0, MPI_BYTE, 0, MPI_COMM_WORLD);
+}
+
+void maze_gen_kruskal_master(int my_rank, int comm_sz, vector<vector<char>> &maze){
+    vector<pair<int,int>> local_mst = kruskals(my_rank, comm_sz);
+    int vertex_count = MAZE_SIZE * MAZE_SIZE / comm_sz;
+    vector<pair<int, int>> received_vectors((vertex_count - 1) * comm_sz);
+    MPI_Gather(local_mst.data(), local_mst.size() * sizeof(pair<int, int>), MPI_BYTE,
+            received_vectors.data(), local_mst.size() * sizeof(pair<int, int>), MPI_BYTE, 0, MPI_COMM_WORLD);
+    // Output the merged vector
+    for(int i=0; i<comm_sz-1; i++)
+    {
+        pair<int,int> r_edge = getRandomEdge(i, comm_sz);
+        received_vectors.push_back(r_edge);
+        cout<<r_edge.first<<" "<<r_edge.second<<'\n';
+    }
+    cout << "Merged Vector:" << endl;
+    for (auto& e : received_vectors) {
+        cout << "(" << e.first << ", " << e.second << ")" << " ";
+    }
+    cout<<"\n";
+    print_1d_maze(received_vectors, MAZE_SIZE);
+    cout<<"sz of received_vectors = "<<received_vectors.size()<<'\n';
+    maze = convert2dmaze(received_vectors, MAZE_SIZE);
+    cout<<"sz of maze = "<<maze.size()<<" "<<maze[0].size()<<'\n';
+    for (int i = 0; i < 2 * MAZE_SIZE; ++i) 
+    {
+        cout<<'.';
+        for (int j = 0; j < 2 * MAZE_SIZE; ++j) {
+            cout << maze[i][j]<<'.';
+        }
+        cout << "\n";
+    }
+}
+
+void maze_gen_bfs_slave(int my_rank, int comm_sz){
+    vector<pair<int,int>> local_mst = bfs(my_rank, comm_sz);
+    MPI_Gather(local_mst.data(), local_mst.size() * sizeof(pair<int, int>), MPI_BYTE, nullptr, 0, MPI_BYTE, 0, MPI_COMM_WORLD);
+}
+
+void maze_gen_bfs_master(int my_rank, int comm_sz, vector<vector<char>> &maze){
+    vector<pair<int,int>> local_mst = bfs(my_rank, comm_sz);
+    int vertex_count = MAZE_SIZE * MAZE_SIZE / comm_sz;
+    vector<pair<int, int>> received_vectors((vertex_count - 1) * comm_sz);
+    MPI_Gather(local_mst.data(), local_mst.size() * sizeof(pair<int, int>), MPI_BYTE,
+            received_vectors.data(), local_mst.size() * sizeof(pair<int, int>), MPI_BYTE, 0, MPI_COMM_WORLD);
+
+    // Output the merged vector
+    for(int i=0; i<comm_sz-1; i++)
+    {
+        pair<int,int> r_edge = getRandomEdge(i, comm_sz);
+        received_vectors.push_back(r_edge);
+        cout<<r_edge.first<<" "<<r_edge.second<<'\n';
+    }
+    cout << "Merged Vector:" << endl;
+    for (auto& e : received_vectors) {
+        cout << "(" << e.first << ", " << e.second << ")" << " ";
+    }
+    cout<<"\n";
+    print_1d_maze(received_vectors, MAZE_SIZE);
+    cout<<"sz of received_vectors = "<<received_vectors.size()<<'\n';
+    maze = convert2dmaze(received_vectors, MAZE_SIZE);
+    cout<<"sz of maze = "<<maze.size()<<" "<<maze[0].size()<<'\n';
+    for (int i = 0; i < 2 * MAZE_SIZE; ++i) 
+    {
         cout<<'.';
         for (int j = 0; j < 2 * MAZE_SIZE; ++j) {
             cout << maze[i][j]<<'.';
