@@ -6,6 +6,7 @@ using namespace std;
 int vertex_no_bfs(int i, int j) {
     return MAZE_SIZE * i + j;
 }
+
 vector<pair<int,int>> bfs(int rank, int comm_sz){
     int rbegin = rank * MAZE_SIZE / comm_sz;
     int rend = min((rank + 1) * MAZE_SIZE / comm_sz - 1, MAZE_SIZE - 1);
