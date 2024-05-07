@@ -59,15 +59,42 @@ int main(int argc, char* argv[]) {
     }
     MPI_Barrier(MPI_COMM_WORLD);
     vector<vector<char>> local_solved_maze = dfs(maze_global, my_rank, comm_sz);
-    // if(my_rank == 3){
-    //     for(int i=0; i<MAZE_SIZE/2; i++){
-    //         cout<<".";
-    //         for(int j=0; j<2*MAZE_SIZE; j++){
-    //             cout<<local_solved_maze[i][j]<<'.';
-    //         }
-    //         cout<<'\n';
-    //     }
-    // }
+    if(my_rank == 0){
+        for(int i=0 ; i<MAZE_SIZE/2; i++){
+            for(int j=0; j<2*MAZE_SIZE; j++){
+                cout<<local_solved_maze[i][j];
+            }
+            cout<<'\n';
+        }
+    }
+    MPI_Barrier(MPI_COMM_WORLD);
+    if(my_rank == 1){
+        for(int i=0 ; i<MAZE_SIZE/2; i++){
+            for(int j=0; j<2*MAZE_SIZE; j++){
+                cout<<local_solved_maze[i][j];
+            }
+            cout<<'\n';
+        }
+    }
+    MPI_Barrier(MPI_COMM_WORLD);
+    if(my_rank == 2){
+        for(int i=0 ; i<MAZE_SIZE/2; i++){
+            for(int j=0; j<2*MAZE_SIZE; j++){
+                cout<<local_solved_maze[i][j];
+            }
+            cout<<'\n';
+        }
+    }
+    MPI_Barrier(MPI_COMM_WORLD);
+    if(my_rank == 3){
+        for(int i=0 ; i<MAZE_SIZE/2; i++){
+            for(int j=0; j<2*MAZE_SIZE; j++){
+                cout<<local_solved_maze[i][j];
+            }
+            cout<<'\n';
+        }
+    }
+    MPI_Barrier(MPI_COMM_WORLD);
     //combine all local_solved_maze to maze_global
     
     // Solve Maze using DFS Algorithm

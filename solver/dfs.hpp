@@ -11,5 +11,5 @@
 #include<stdlib.h>
 
 using namespace std;
-vector<vector<char>> dfs(vector<vector<char>> maze, int rank, int comm_sz) ;
+vector<vector<char>> dfs(vector<vector<char>> &maze, int rank, int comm_sz) ;
 bool recursive_dfs(vector<vector<char>> &maze, vector<vector<int>> &visited, int i, int j, int rend);
