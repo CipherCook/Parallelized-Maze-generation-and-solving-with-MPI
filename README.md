@@ -1,13 +1,10 @@
-# COL380_A3
-Distributed Programming Maze Generation and Solving with MPI
+This is the code for PDP Assignment 3
 
-## TODO 
-1. Separate out Kruskal's into a separate file
-2. Add BFS Generation
-3. Add solvers
-4. Convert vectors to arrays for speed improvement later
+Authors: 
+Hardik Garg : cs1210560
+Utkarsh Sharma : cs1210098  
+Rajat Golechha : cs1210082
 
-### Report Specification for later
-1. Using my_rank in local seeds to ensure correct randomness
-2. 1d Wall to 2d Generation
-3. Using 1d representation for solving
+To run use make
+to clean use make clean
+to run the generated output file use mpirun -np 4 ./maze.out -g [kruskal/bfs] -s [dfs/dijkstra] 

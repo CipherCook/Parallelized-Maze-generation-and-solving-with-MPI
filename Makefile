@@ -5,13 +5,13 @@ CXX = mpicxx
 CFLAGS = -g -O2 -std=c++17
 
 #define the sources
-SRC1 = generator/mazegenerator.cpp
-SRC2 = generator/kruskal.cpp
-SRC3 = generator/bfs.cpp
-SRC4 = solver/dfs.cpp
-SRC5 = solver/dijkstra.cpp
-SRC6 = solver/mazesolver.cpp
-SRC7 = maze.cpp
+SRC1 = src/generator/mazegenerator.cpp
+SRC2 = src/generator/kruskal.cpp
+SRC3 = src/generator/bfs.cpp
+SRC4 = src/solver/dfs.cpp
+SRC5 = src/solver/dijkstra.cpp
+SRC6 = src/solver/mazesolver.cpp
+SRC7 = src/maze.cpp
 
 MAIN = maze.out
 
